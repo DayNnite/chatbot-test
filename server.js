@@ -1,29 +1,20 @@
+// server.js
+
 const express = require('express');
-const cors = require('cors');
+const path = require('path');
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-// This will give people your widget code
-app.get('/widget.js', (req, res) => {
-  res.type('application/javascript');
-  res.send(`
-    window.MyChatWidget = {
-      init: function(options) {
-        console.log('Chatbot started for client:', options.clientId);
-      }
-    };
-  `);
-});
+// Serve all static files from the "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Simple check if server is alive
+// Default route for testing (optional)
 app.get('/', (req, res) => {
-  res.send('Server is running!');
+  res.send('✅ Server is live!');
 });
 
-// Start your server
+// Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log('Server running on port ' + PORT);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });
